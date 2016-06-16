@@ -44,9 +44,7 @@
         top: -20px;
       }
 
-    </style><div class="directive" ng-controller="RangeController as range"><h3>Date Range Picker (ob-daterangepicker)</h3><div class="section"><div class="config"><div class="label">Format</div><input ng-model="range.format" class="input" ng-blur="range.render()" ng-keypress="range.render($event)"></div><div class="config"><div class="label">Range Start-Day</div><input ng-model="range.range.start" class="input" placeholder="{{range.format}}" ng-blur="range.render()" ng-keypress="range.render($event)"></div><div class="config"><div class="label">Range End-Day</div><input ng-model="range.range.end" class="input" placeholder="{{range.format}}" ng-blur="range.render()" ng-keypress="range.render($event)"></div><div class="config"><div class="label">Min-Day</div><input ng-model="range.min" class="input" placeholder="{{range.format}}" ng-blur="range.render()" ng-keypress="range.render($event)"></div><div class="config"><div class="label">Max-Day</div><input ng-model="range.max" class="input" placeholder="{{range.format}}" ng-blur="range.render()" ng-keypress="range.render($event)"></div></div><div class="section"><div class="config"><div class="label">Linked Calendars</div><span class="radio-label">True:</span> <input type="radio" class="input" name="link" ng-model="range.linked" ng-value="true" ng-change="range.render()"> <span class="radio-label">False:</span> <input type="radio" class="input" name="link" ng-model="range.linked" ng-value="false" ng-change="range.render()"></div><div class="config"><div class="label">Week Starts At</div><span class="radio-label">Su:</span> <input type="radio" class="input" name="start" ng-model="range.weekStart" value="su" ng-change="range.render()"> <span class="radio-label">Mo:</span> <input type="radio" class="input" name="start" ng-model="range.weekStart" value="mo" ng-change="range.render()"></div><div class="config"><div class="label">Drops to</div><span class="radio-label">Up</span> <input type="radio" class="input" name="drop" ng-model="range.dropsUp" ng-value="true"> <span class="radio-label">Down</span> <input type="radio" class="input" name="drop" ng-model="range.dropsUp" ng-value="false"></div><div class="config"><div class="label">Opens To</div><span class="radio-label">Left</span> <input type="radio" class="input" name="opens" ng-model="range.opens" value="left"> <span class="radio-label">Center</span> <input type="radio" class="input" name="opens" ng-model="range.opens" value="center"> <span class="radio-label">Right</span> <input type="radio" class="input" name="opens" ng-model="range.opens" value="right"></div><div class="config"><div class="label">Auto Apply</div><span class="radio-label">True</span> <input type="radio" class="input" name="autoApply" ng-model="range.autoApply" ng-value="true" ng-change="range.render()"> <span class="radio-label">False</span> <input type="radio" class="input" name="autoApply" ng-model="range.autoApply" ng-value="false" ng-change="range.render()"></div></div><div class="section"><div class="config"><div class="label">Disabled</div><span class="radio-label">True</span> <input type="radio" class="input" name="disabled" ng-model="range.disabled" ng-value="true" ng-change="range.render()"> <span class="radio-label">False</span> <input type="radio" class="input" name="disabled" ng-model="range.disabled" ng-value="false" ng-change="range.render()"></div><div class="config"><div class="label">Always Show Calendars</div><span class="radio-label">True</span> <input type="radio" class="input" name="calendarsAlwaysOn" ng-model="range.calendarsAlwaysOn" ng-value="true" ng-change="range.render()"> <span class="radio-label">False</span> <input type="radio" class="input" name="calendarsAlwaysOn" ng-model="range.calendarsAlwaysOn" ng-value="false" ng-change="range.render()"></div></div><div class="ob-datepicker-container"><ob-daterangepicker ng-class="{'up': range.dropsUp}" class="{{range.opens}}" min-day="range.min" max-day="range.max" linked-calendars="range.linked" api="range.dateRangeApi" on-apply="range.rangeApplied(start, end)" ranges="range.ranges" range="range.range" format="range.format" week-start="range.weekStart" auto-apply="range.autoApply" disabled="range.disabled" calendars-always-on="range.calendarsAlwaysOn"></ob-daterangepicker></div><br><pre ng-cloak="">{{range.range | json}}</pre></div><hr><div class="directive" ng-controller="DayController as single"><h3>Day Picker (ob-daypicker)</h3><div class="section"><div class="config"><div class="label">Format</div><input ng-model="single.format" class="input" ng-blur="single.render()" ng-keypress="single.render($event)"></div><div class="config"><div class="label">Min-Day</div><input ng-model="single.min" class="input" placeholder="{{single.format}}" ng-blur="single.render()" ng-keypress="single.render($event)"></div><div class="config"><div class="label">Max-Day</div><input ng-model="single.max" class="input" placeholder="{{single.format}}" ng-blur="single.render()" ng-keypress="single.render($event)"></div><div class="config"><div class="label">Week Starts At</div><span class="radio-label">Su:</span> <input type="radio" class="input" name="startDayPicker" ng-model="single.weekStart" value="su" ng-change="single.render()"> <span class="radio-label">Mo:</span> <input type="radio" class="input" name="startDayPicker" ng-model="single.weekStart" value="mo" ng-change="single.render()"></div><div class="config"><div class="label">Opens To</div><span class="radio-label">Left</span> <input type="radio" class="input" name="opensDayPicker" ng-model="single.opens" value="left"> <span class="radio-label">Center</span> <input type="radio" class="input" name="opensDayPicker" ng-model="single.opens" value="center"> <span class="radio-label">Right</span> <input type="radio" class="input" name="opensDayPicker" ng-model="single.opens" value="right"></div></div><div class="section"><div class="config"><div class="label">Disabled</div><span class="radio-label">True</span> <input type="radio" class="input" name="disabledDayPicker" ng-model="single.disabled" ng-value="true" ng-change="single.render()"> <span class="radio-label">False</span> <input type="radio" class="input" name="disabledDayPicker" ng-model="single.disabled" ng-value="false" ng-change="single.render()"></div><div class="config"><div class="label">Validate Input</div><span class="radio-label">True</span> <input type="radio" class="input" name="validateInputDayPicker" ng-model="single.validateInput" ng-value="true" ng-change="single.render()"> <span class="radio-label">False</span> <input type="radio" class="input" name="validateInputDayPicker" ng-model="single.validateInput" ng-value="false" ng-change="single.render()"></div><div class="config"><div class="label">Auto Apply</div><span class="radio-label">True</span> <input type="radio" class="input" name="AutoApplyDayPicker" ng-model="single.autoApply" ng-value="true" ng-change="single.render()"> <span class="radio-label">False</span> <input type="radio" class="input" name="AutoApplyDayPicker" ng-model="single.autoApply" ng-value="false" ng-change="single.render()"></div></div><div class="ob-daypicker-container"><form name="testForm"><ob-daypicker name="pickerOne" auto-apply="single.autoApply" class="{{single.opens}}" selected-day="single.selectedDay" min-day="single.min" max-day="single.max" api="single.dayPickerApi" on-apply="single.onApply(day)" format="single.format" week-start="single.weekStart" valid-day="single.validateInput" disabled="single.disabled"></ob-daypicker><span class="error-message" ng-if="testForm.pickerOne.$invalid">Invalid Date</span></form></div><pre>
-        selected: {{single.selectedDay}}
-      </pre></div><script src="scripts/vendor.js"></script><script src="scripts/ob-daterangepicker.js"></script><script>
+    </style><div class="directive" ng-controller="RangeController as range"><div class="ob-datepicker-container"><ob-daterangepicker ng-class="{'up': range.dropsUp}" class="{{range.opens}}" min-day="range.min" max-day="range.max" linked-calendars="range.linked" api="range.dateRangeApi" on-apply="range.rangeApplied(start, end)" first-day-change="range.firstDaySelected(day)" second-day-change="range.secondDaySelected(day)" ranges="range.ranges" range="range.range" static="range.static" format="range.format" week-start="range.weekStart" auto-apply="range.autoApply" disabled="range.disabled"></ob-daterangepicker></div><br><pre ng-cloak="">{{range.range | json}}</pre></div><script src="scripts/vendor.js"></script><script src="scripts/ob-daterangepicker.js"></script><script>
       angular.module('demo', ['obDateRangePicker'])
         .controller('RangeController', RangeCtrl);
 
@@ -62,30 +60,23 @@
         this.linked = true;
         this.calendarsAlwaysOn = true;
         this.range = {
-          start: moment(),
+          start: moment().subtract(1, 'd'),
           end: moment()
         };
 
-        this.ranges = [
-          {
-            name: 'Today',
-            start: moment(),
-            end: moment()
-          },
-          {
-            name: 'Yesterday',
-            start: moment().subtract(1, 'd'),
-            end: moment().subtract(1, 'd')
-          },
-          {
-            name: 'Current Month',
-            start: moment().startOf('month'),
-            end: moment()
-          }
-        ];
+        this.max = moment(); 
 
-        this.rangeApplied = function(start, end) {
-          console.log(start, end);
+        this.static = {
+          start: moment().subtract(10, 'd'),
+          end: moment()
+        };
+
+        this.firstDaySelected = function(day) {
+          console.log(day);
+        };
+
+        this.secondDaySelected = function(day) {
+          console.log(day);
         };
 
         this.setDateRange = function() {
@@ -103,32 +94,4 @@
           }
         }
       }
-    </script><script>
-      angular.module('demo')
-        .controller('DayController', DayCtrl);
-
-      function DayCtrl() {
-        var _this = this;
-        this.weekStart = 'su';
-        this.dayPickerApi = {};
-        this.opens = 'left';
-        this.format = 'MMM DD, YYYY';
-        this.selectedDay = moment().add(-10, 'd').format(this.format);
-        this.min = moment().subtract(5, 'd').format(this.format);
-        this.disabled = true;
-        this.validateInput = true;
-        this.autoApply = true;
-
-        this.render = function(e) {
-          if(e) {
-            e.keyCode == 13 && this.dayPickerApi.render();
-          } else {
-            _this.dayPickerApi.render()
-          }
-        };
-
-        this.onApply = function(day) {
-          console.log(day);
-        }
-      }
-    </script><a href="https://github.com/outbrain/pure-angular-date-range-picker"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a></body></html>
+    </script></body></html>
