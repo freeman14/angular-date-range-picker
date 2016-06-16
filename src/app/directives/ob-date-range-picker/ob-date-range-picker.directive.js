@@ -17,6 +17,8 @@ export function ObDateRangePicker() {
       onApply: '&',
       linkedCalendars: '&',
       autoApply: '&',
+      firstDayChange: '&',
+      secondDayChange: '&',
       disabled: '&',
       calendarsAlwaysOn: '&',
       api: '=?'
@@ -120,10 +122,14 @@ class ObDateRangePickerController {
 
   setPickerInterceptors() {
     this.pickerInterceptors = {
+      firstDaySelected: (day) => {
+        this.firstDayChange({ day: day })
+      },
+      secondDaySelected: (day) => {
+        this.secondDayChange({ day: day });
+      },
       rangeSelectedByClick: () => {
-        if (this.autoApply()) {
-          this.applyChanges();
-        }
+        this.applyChanges();
       }
     }
   }

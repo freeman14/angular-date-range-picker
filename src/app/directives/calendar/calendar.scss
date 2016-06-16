@@ -107,14 +107,20 @@ calendar {
         cursor: pointer;
       }
 
+      &:hover:not(.in-range):not(.disabled) {
+        cursor: pointer;
+        border-color: #80CFE7;
+        border-style: double;
+      }
+
       &.selected:not(.other-month):not(.disabled) {
         background: pink;
         color: $white;
       }
 
-      &.current:not(.other-month) {
-        font-weight: bold;
-      }
+      // &.current:not(.other-month) {
+      //   font-weight: bold;
+      // }
 
       &.other-month {
         visibility: hidden;
@@ -124,6 +130,7 @@ calendar {
         background: $mainColor;
         border-color: $mainColor;
         color: $white;
+        border-style: double;
       }
 
       &.range-start:not(.other-month):not(.disabled) {

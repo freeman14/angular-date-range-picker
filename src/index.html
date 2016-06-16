@@ -83,14 +83,15 @@
           linked-calendars="range.linked"
           api="range.dateRangeApi"
           on-apply="range.rangeApplied(start, end)"
+          first-day-change="range.firstDaySelected(day)"
+          second-day-change="range.secondDaySelected(day)"
           ranges="range.ranges"
           range="range.range"
           static="range.static"
           format="range.format"
           week-start="range.weekStart"
           auto-apply="range.autoApply"
-          disabled="range.disabled"
-          calendars-always-on="range.calendarsAlwaysOn">
+          disabled="range.disabled">
         </ob-daterangepicker>
       </div>
       <br/>
@@ -141,8 +142,12 @@
           end: moment()
         };
 
-        this.rangeApplied = function(start, end) {
-          console.log(start, end);
+        this.firstDaySelected = function(day) {
+          console.log(day);
+        };
+
+        this.secondDaySelected = function(day) {
+          console.log(day);
         };
 
         this.setDateRange = function() {
