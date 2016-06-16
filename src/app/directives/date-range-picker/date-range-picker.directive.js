@@ -116,6 +116,9 @@ class DateRangePickerController {
         this.daySelected(day);
         if(this.daysSelected == 2) {
           this.interceptors.rangeSelectedByClick && this.interceptors.rangeSelectedByClick();
+          this.interceptors.secondDaySelected && this.interceptors.secondDaySelected(day);
+        } else {
+          this.interceptors.firstDaySelected && this.interceptors.firstDaySelected(day);
         }
       },
       inputSelected: (day) => {
