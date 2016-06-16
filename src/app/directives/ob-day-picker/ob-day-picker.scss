@@ -1,0 +1,54 @@
+@import "../common/variables";
+
+ob-daypicker {
+  display: inline-block;
+  overflow: visible;
+
+  .picker-dropdown-container {
+    position: relative;
+
+    &.disabled {
+      input {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    &.invalid input{
+      border: 1px solid $errorColor;
+    }
+
+    .picker {
+      position: absolute;
+      top: $inputHeight - 23;
+      z-index: 10;
+    }
+
+    input {
+      box-sizing: border-box;
+      height: $inputHeight;
+      width: 200px;
+      line-height: $inputHeight;
+      border: 1px solid $borderColor;
+      border-radius: $inputBorderRadius;
+      padding-left: 10px;
+      outline: none;
+      font-size: 14px;
+    }
+  }
+
+  &.center {
+    .picker {
+      right: auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  &.right {
+    .picker {
+      left: auto;
+      right: 0;
+    }
+  }
+}

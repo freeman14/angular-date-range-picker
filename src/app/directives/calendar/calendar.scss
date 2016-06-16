@@ -1,0 +1,172 @@
+@import "../common/variables";
+
+$cellWidth: 38px;
+$cellHeight: 38px;
+$disabledDayColor: #E2DFDE;
+$rangeColor: #97B7C7;
+
+calendar {
+  font-family: $mainFont;
+  color: $mainTextColor;
+
+  .input-container {
+    position: relative;
+
+    label {
+      position: relative;
+      top: 4px;
+      display: inline-block;
+      color: $mainTextColor;
+      font-size: $mainFontSize;
+    }
+
+    input {
+      position: absolute;
+      right: 0;
+      padding-left: 5px;
+      box-sizing: border-box;
+      width: 185px;
+      height: 25px;
+      font-size: $mainFontSize;
+      outline: none;
+      border: 1px solid $borderColor;
+      border-radius: $inputBorderRadius;
+    }
+  }
+
+  .header {
+    position: relative;
+    top: 20px;
+    height: 50px;
+    font-size: 18px;
+
+    .date {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+    }
+
+    .arrow-btn {
+      position: absolute;
+      top: 7px;
+      font-size: 16px;
+      width: $cellWidth;
+      height: $cellHeight;
+      line-height: $cellHeight;
+      text-align: center;
+      cursor: pointer;
+
+      &.left {
+        left: 0;
+      }
+
+      &.right {
+        right: 0;
+      }
+    }
+  }
+
+  .board {
+    position: relative;
+    top: 21px;
+    white-space: nowrap;
+
+    .cell {
+      height: $cellHeight;
+      width: $cellWidth;
+      text-align: center;
+      font-size: $mainFontSize;
+      position: relative;
+    }
+
+    .days-of-week {
+      .day-name {
+        @extend .cell;
+        font-size: 12px;
+        color: #AAAAAA;
+        width: 39px;
+        display: inline-block;
+        padding: 1px;
+      }
+    }
+
+    .weeks {
+        border-collapse: collapse;
+    }
+
+    .day {
+      @extend .cell;
+
+      border: 1px solid $cellBorderColor;
+
+      // border-right: 1px solid $cellBorderColor;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &.selected:not(.other-month):not(.disabled) {
+        background: pink;
+        color: $white;
+      }
+
+      &.current:not(.other-month) {
+        font-weight: bold;
+      }
+
+      &.other-month {
+        visibility: hidden;
+      }
+
+      &.in-range:not(.other-month):not(.disabled) {
+        background: $mainColor;
+        border-color: $mainColor;
+        color: $white;
+      }
+
+      &.range-start:not(.other-month):not(.disabled) {
+        background: $mainColor;
+      }
+
+      &.range-end:not(.other-month):not(.disabled) {
+        background: $mainColor;
+      }
+
+      &.disabled {
+        color: $disabledDayColor;
+      }
+
+      &.in-static-range::after {
+        content: '';
+        background: rgba(199, 233, 244, 0.5);
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 6px;
+        bottom: 0;
+        height: 28px;
+        z-index: 10;
+        width: 41px;
+      }
+
+      &.static-range-start::after {
+        border-top-left-radius: 50px;
+        border-bottom-left-radius: 50px;
+        overflow: hidden;
+        left: 6px;
+        width: 35px;
+      }
+
+      &.static-range-end::after {
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+        overflow: hidden;
+        right: 6px;
+        width: 35px;
+      }
+
+    }
+  }
+}

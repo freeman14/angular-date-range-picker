@@ -1,0 +1,11 @@
+@import "../common/variables";
+
+date-range-picker {
+  .calendar {
+    display: inline-block;
+
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}

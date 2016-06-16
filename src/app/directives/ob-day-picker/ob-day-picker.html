@@ -1,0 +1,26 @@
+<div ng-form="{{::dayPicker.formName}}" class="picker-dropdown-container"
+     ng-class="{'open': dayPicker.isPickerVisible,
+                'disabled': dayPicker.disabled(),
+                'invalid': !dayPicker.dayValidity}">
+  <input class="picker-input"
+         ng-model="dayPicker.value"
+         ng-change="dayPicker.updateValidity()"
+         ng-keydown="dayPicker.dateInputEntered($event, dayPicker.value)"
+         ng-click="dayPicker.showPicker()"
+         ng-disabled="dayPicker.disabled()"/>
+  <div class="picker" ng-show="dayPicker.isPickerVisible">
+    <calendar class="calendar"
+              api="dayPicker.calendarApi"
+              min-day="dayPicker._getMinDay()"
+              max-day="dayPicker._getMaxDay()"
+              week-start="dayPicker.weekStart()"
+              month="dayPicker._selectedDay"
+              interceptors="dayPicker.calendarInterceptors"
+              selected-day="dayPicker._selectedDay"
+              min-month="dayPicker.startCalendar"
+              week-days-name="dayPicker.weekDaysName()"
+              month-format="dayPicker.monthFormat()"
+              show-input="false">
+    </calendar>
+  </div>
+</div>

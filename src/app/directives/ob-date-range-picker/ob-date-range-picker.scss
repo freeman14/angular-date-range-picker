@@ -1,0 +1,178 @@
+@import "../common/variables";
+
+$actionBtnColor: #565154;
+$dropdownHeight: 30px;
+
+ob-daterangepicker {
+  display: inline-block;
+  overflow: visible;
+  font-family: $mainFont;
+  font-size: $mainFontSize;
+
+  .picker-dropdown-container {
+    position: relative;
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .picker-dropdown {
+      box-sizing: border-box;
+      position: relative;
+      width: 290px;
+      height: $dropdownHeight;
+      line-height:30px;
+      border: 1px solid $borderColor;
+      border-radius: $inputBorderRadius;
+      padding-left: 10px;
+      font-size: 14px;
+
+      &.open {
+        border-radius: $inputBorderRadius $inputBorderRadius 0 0;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 7px 7px 0 7px;
+        border-color: #000000 transparent transparent transparent;
+      }
+    }
+
+    .picker {
+      box-sizing: border-box;
+      height: 288px;
+      position: absolute;
+      white-space: nowrap;
+      overflow: visible;
+      right: 0;
+      top: $dropdownHeight - 1px;
+      z-index: 10;
+      background: white;
+      border: 1px solid $borderColor;
+      border-radius: $inputBorderRadius;
+
+      &.open {
+        border-radius: $inputBorderRadius 0 $inputBorderRadius $inputBorderRadius;
+      }
+
+      .ranges-actions {
+        display: inline-block;
+        vertical-align: top;
+        height: 100%;
+        width: 150px;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 1$inputBorderRadius;
+
+        .ranges {
+          .range {
+            height: 24px;
+            line-height: 24px;
+            border-radius: $inputBorderRadius;
+            padding: 0 5px;
+            margin-bottom: 5px;
+
+            &:hover:not(.disabled), &.selected {
+              cursor: pointer;
+              background: $mainColor;
+              color: $white;
+            }
+
+            &.disabled {
+              background: #CCCCCC;
+              opacity: 0.7;
+            }
+          }
+        }
+
+        .actions {
+          width: 150px;
+          padding: 0 3px;
+          margin-top: 10px;
+          position: absolute;
+          bottom: 10px;
+
+          .btn {
+            height: 27px;
+            line-height: 27px;
+            cursor: pointer;
+            width: 60px;
+            display: inline-block;
+            text-align: center;
+
+            &.cancel {
+              text-decoration: underline;
+              color: $actionBtnColor;
+            }
+
+            &.apply {
+              background: $actionBtnColor;
+              color: $white;
+              border-radius: $inputBorderRadius;
+            }
+          }
+        }
+
+        &.custom-open {
+          border-left: 1px solid $borderColor;
+        }
+      }
+
+      .date-range {
+        padding: 10px;
+        display: inline-block;
+      }
+    }
+  }
+
+  &.center {
+    .picker {
+      right: auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  &.right {
+    .picker {
+      right: auto;
+      left: 0;
+    }
+  }
+
+  &.up {
+    .picker-dropdown.open {
+      border-radius: 0 0 $inputBorderRadius $inputBorderRadius;
+    }
+
+    .picker {
+      top: 1px;
+      transform: translateY(-100%);
+
+      &.open {
+        border-radius: $inputBorderRadius $inputBorderRadius 0 $inputBorderRadius;
+      }
+    }
+
+    &.center {
+      .picker {
+        transform: translate(-50%, -100%);
+      }
+    }
+
+    &.right {
+      .picker {
+        &.open {
+          border-radius: $inputBorderRadius $inputBorderRadius $inputBorderRadius 0;
+        }
+      }
+    }
+  }
+}

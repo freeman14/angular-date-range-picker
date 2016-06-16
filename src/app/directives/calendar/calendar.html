@@ -1,0 +1,35 @@
+<div class="input-container" ng-if="month._showInput()">
+</div>
+
+<div class="header">
+  <span class="arrow-btn left" ng-if="month.showLeftArrow()" ng-click="month.moveToPrev()">◀</span>
+  <span class="date">{{month.getFormattedMonth(month.calendar.currentCalendar)}}</span>
+  <span class="arrow-btn right" ng-if="month.showRightArrow()" ng-click="month.moveToNext(1)">▶</span>
+</div>
+
+<div class="board">
+  <div class="days-of-week">
+    <span class="day-name" ng-repeat="day in month.daysName track by $index">{{day}}</span>
+  </div>
+
+  <table class="weeks">
+    <tbody>
+      <tr class="week" ng-repeat="week in month.calendar.monthWeeks track by $index">
+        <td class="day" ng-repeat="day in week track by $index" ng-class="{
+                'selected': day.selected,
+                'current': day.currentDay,
+                'other-month': !day.currentMonth,
+                'in-range': day.inRange,
+                'range-start': day.rangeStart,
+                'range-end': day.rangeEnd,
+                'disabled': day.disabled,
+                'in-static-range': day.inStaticRange,
+                'static-range-start': day.staticRangeStart,
+                'static-range-end': day.staticRangeEnd,
+              }" ng-click="month.daySelected(day)">
+          {{day.mo.format('D')}}
+        </td>
+      </tr>
+  <tbody>
+  </table>
+</div>
