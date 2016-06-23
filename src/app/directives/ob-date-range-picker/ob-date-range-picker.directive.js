@@ -299,7 +299,6 @@ class ObDateRangePickerController {
   applyChanges(callApply = true) {
     this.setRange();
     this.hidePicker();
-    this.pickerApi.setCalendarPosition(this._range.start, this._range.end);
     if (callApply && this.onApply) {
       this.onApply({start: this._range.start, end: this._range.end});
     }

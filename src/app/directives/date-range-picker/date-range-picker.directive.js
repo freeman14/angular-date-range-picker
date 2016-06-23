@@ -51,7 +51,8 @@ class DateRangePickerController {
       setCalendarPosition: (start, end) => {
         this.startCalendar = start;
         if (this.linkedCalendars() || start.isSame(end, 'M')) {
-          this.endCalendar = this.startCalendar.clone().add(1, 'M');
+          this.endCalendar = this.startCalendar.clone();
+          this.startCalendar = this.startCalendar.subtract(1, 'M')
         } else {
           this.endCalendar = end;
         }
