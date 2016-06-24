@@ -43,6 +43,12 @@ class DateRangePickerController {
     this.setApi();
     this.watchRangeChange();
     this.interceptors = this.interceptors() || {}
+
+    this.minRangeDay = undefined;
+    this.maxRangeDay = undefined;
+
+    this.hovered = undefined;
+
   }
 
   setApi() {
@@ -115,15 +121,29 @@ class DateRangePickerController {
       daySelected: (day) => {
         this.dayInStartSelected(day);
         this.daySelected(day);
-        if(this.daysSelected == 2) {
+
+        if (this.daysSelected == 2) {
           this.interceptors.rangeSelectedByClick && this.interceptors.rangeSelectedByClick();
           this.interceptors.secondDaySelected && this.interceptors.secondDaySelected(day);
+          this.minRangeDay = undefined;
+          this.maxRangeDay = undefined;
         } else {
           this.interceptors.firstDaySelected && this.interceptors.firstDaySelected(day);
+          if (day.mo !== undefined) {
+            this.minRangeDay = day.mo.clone();
+            this.maxRangeDay = day.mo.clone().add(29, 'days');
+          } else {
+            this.minRangeDay = day.clone();
+            this.maxRangeDay = day.clone().add(29, 'days');
+          }
         }
+
       },
       inputSelected: (day) => {
         this.inputInStartSelected(day);
+      },
+      dayHovered: (day) => {
+        this.onHover(day);
       }
     };
 
@@ -137,12 +157,29 @@ class DateRangePickerController {
       daySelected: (day) => {
         this.dayInEndSelected(day);
         this.daySelected(day);
-        if(this.daysSelected == 2) {
+
+        if (this.daysSelected == 2) {
           this.interceptors.rangeSelectedByClick && this.interceptors.rangeSelectedByClick();
+          this.interceptors.secondDaySelected && this.interceptors.secondDaySelected(day);
+          this.minRangeDay = undefined;
+          this.maxRangeDay = undefined;
+        } else {
+          this.interceptors.firstDaySelected && this.interceptors.firstDaySelected(day);
+          if (day.mo !== undefined) {
+            this.minRangeDay = day.mo.clone();
+            this.maxRangeDay = day.mo.clone().add(29, 'days');
+          } else {
+            this.minRangeDay = day.clone();
+            this.maxRangeDay = day.clone().add(29, 'days');
+          }
         }
+
       },
       inputSelected: (day) => {
         this.inputInEndSelected(day);
+      },
+      dayHovered: (day) => {
+        this.onHover(day);
       }
     }
   }
@@ -231,6 +268,18 @@ class DateRangePickerController {
     }
   }
 
+  onHover(day) {
+    if (day.diff(this.rangeStart, 'days') > 0 && this.minRangeDay !== undefined) {
+      if (day.mo !== undefined) {
+        this.dayHovered = day.mo.clone();
+      } else {
+        this.dayHovered = day.clone();
+      }
+    } else {
+      this.dayHovered = undefined;
+    }
+  }
+
   moveCalenders(month, calendar) {
     if (this.areCalendarsLinked()) {
       this.startCalendar = this.startCalendar.clone().add(month, 'M');
@@ -281,24 +330,24 @@ class DateRangePickerController {
         } else if (newEnd && newEnd.isAfter(this.endCalendar, 'M')) {
           this.startCalendar = newEnd;
           this.endCalendar = newEnd.clone().add(1, 'M');
-        } else if(!newStart.isSame(this.endCalendar, 'M')) {
+        } else if (!newStart.isSame(this.endCalendar, 'M')) {
           this.startCalendar = newStart;
           this.endCalendar = newStart.clone().add(1, 'M');
         }
 
       } else {
         if (!(newStart.isSame(this.startCalendar, 'M') || newStart.isSame(this.endCalendar, 'M'))) {
-          if(newStart.isBefore(this.startCalendar, 'M')) {
+          if (newStart.isBefore(this.startCalendar, 'M')) {
             this.startCalendar = newStart;
 
-            if(newEnd && !newEnd.isSame(this.endCalendar, 'M')) {
-              if(newStart.isSame(newEnd, 'M')) {
+            if (newEnd && !newEnd.isSame(this.endCalendar, 'M')) {
+              if (newStart.isSame(newEnd, 'M')) {
                 this.endCalendar = newStart.clone().add(1, "M");
               } else {
                 this.endCalendar = newEnd;
               }
             }
-          } else if(newStart.isAfter(this.endCalendar)) {
+          } else if (newStart.isAfter(this.endCalendar)) {
             this.startCalendar = newStart;
             this.endCalendar = newStart.clone().add(1, 'M');
           }

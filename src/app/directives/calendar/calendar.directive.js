@@ -5,6 +5,8 @@ export function Calendar() {
     restrict: 'E',
     scope: {
       minDay: '&',
+      minRangeDay: '&',
+      maxRangeDay: '&',
       maxDay: '&',
       weekStart: '&',
       getMonth: '&month',
@@ -18,6 +20,7 @@ export function Calendar() {
       monthFormat: '&',
       inputFormat: '&',
       showInput: '&',
+      hovered: '&',
       api: '=?',
       static: '=?'
     },
@@ -90,6 +93,12 @@ class CalendarController {
       this.calendar = this.buildCalendar(newMonth);
     });
 
+    this.Scope.$watch(() => {
+      return this.hovered();
+    }, (hovered) => {
+      this.updateDaysProperties(this.calendar.monthWeeks);
+    });
+
     this.Scope.$watchGroup([
       () => this.rangeStart(),
       () => this.rangeEnd()
@@ -108,18 +117,24 @@ class CalendarController {
     monthWeeks.forEach((week) => {
       week.forEach((day) => {
         day.selected = day.mo.isSame(selectedDay || null, 'day');
-        day.inRange = this.isInRange(day.mo);
+        day.inRange = this.isInHoverRange(day.mo) || this.isInRange(day.mo);
         day.rangeStart = day.mo.isSame(rangeStart || null, 'day');
         day.rangeEnd = day.mo.isSame(rangeEnd || null, 'day');
         day.inStaticRange = this.isInStaticRange(day.mo);
         day.staticRangeStart = day.mo.isSame(this.static.start || null, 'day');
         day.staticRangeEnd = day.mo.isSame(this.static.end || null, 'day');
+        day.inHoverRange = day.mo.isAfter();
         if (minDay) {
           day.disabled = day.mo.isBefore(minDay, 'day');
         }
         if (maxDay && !day.disabled) {
           day.disabled = day.mo.isAfter(maxDay, 'day');
         }
+
+        if (!day.disabled && this.minRangeDay() !== undefined) {
+          day.disabled = day.mo.isAfter(this.maxRangeDay(), 'day');
+        }
+
       });
     });
   }
@@ -189,7 +204,7 @@ class CalendarController {
   getMonthDateRange(year, month) {
     let startDate = this.Moment([year, month - 1]);
     let endDate = this.Moment(startDate).endOf('month');
-    return {start: startDate, end: endDate};
+    return { start: startDate, end: endDate };
   }
 
   isInRange(day) {
@@ -199,6 +214,14 @@ class CalendarController {
     inRange = day.isBetween(rangeStart, rangeEnd) || day.isSame(rangeStart, 'day') ||
       inRange || day.isSame(rangeEnd, 'day');
 
+    return inRange;
+  }
+
+  isInHoverRange(day) {
+    let inRange = false;
+    let rangeStart = this.rangeStart() || null;
+    let hovered = this.hovered() || null;
+    inRange = day.isBetween(rangeStart, hovered) || day.isSame(hovered, 'day');
     return inRange;
   }
 
@@ -216,6 +239,14 @@ class CalendarController {
     if (!day.disabled) {
       if (this.interceptors.daySelected) {
         this.interceptors.daySelected.call(this.interceptors.context, day.mo);
+      }
+    }
+  }
+
+  dayHovered(day) {
+    if (!day.disabled) {
+      if (this.interceptors.dayHovered) {
+        this.interceptors.dayHovered.call(this.interceptors.context, day.mo);
       }
     }
   }
@@ -242,7 +273,7 @@ class CalendarController {
         if (this.interceptors.inputSelected) {
           this.interceptors.inputSelected(day);
         } else {
-          this.daySelected({mo: day});
+          this.daySelected({ mo: day });
         }
       }
     }
