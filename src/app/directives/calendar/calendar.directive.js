@@ -117,13 +117,13 @@ class CalendarController {
     monthWeeks.forEach((week) => {
       week.forEach((day) => {
         day.selected = day.mo.isSame(selectedDay || null, 'day');
-        day.inRange = this.isInHoverRange(day.mo) || this.isInRange(day.mo);
+        day.inRange =  this.isInRange(day.mo);
+        day.inHoverRange =  this.isInHoverRange(day.mo);
         day.rangeStart = day.mo.isSame(rangeStart || null, 'day');
         day.rangeEnd = day.mo.isSame(rangeEnd || null, 'day');
         day.inStaticRange = this.isInStaticRange(day.mo);
         day.staticRangeStart = day.mo.isSame(this.static.start || null, 'day');
         day.staticRangeEnd = day.mo.isSame(this.static.end || null, 'day');
-        day.inHoverRange = day.mo.isAfter();
         if (minDay) {
           day.disabled = day.mo.isBefore(minDay, 'day');
         }

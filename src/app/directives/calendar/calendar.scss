@@ -133,6 +133,13 @@ calendar {
         border-style: double;
       }
 
+      &.in-hover-range:not(.other-month):not(.disabled) {
+        background: red;
+        border-color: $mainColor;
+        color: $white;
+        border-style: double;
+      }
+
       &.range-start:not(.other-month):not(.disabled) {
         background: $mainColor;
       }
