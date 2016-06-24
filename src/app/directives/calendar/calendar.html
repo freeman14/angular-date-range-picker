@@ -29,7 +29,8 @@
                 'static-range-end': day.staticRangeEnd,
               }" 
               ng-click="month.daySelected(day)"
-              ng-mouseover="month.dayHovered(day)">
+              ng-mouseover="month.dayHovered(day, true)"
+              ng-mouseleave="month.dayHovered(day, false)">
           {{day.mo.format('D')}}
         </td>
       </tr>

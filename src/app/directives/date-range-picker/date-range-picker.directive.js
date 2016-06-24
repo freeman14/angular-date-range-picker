@@ -142,8 +142,8 @@ class DateRangePickerController {
       inputSelected: (day) => {
         this.inputInStartSelected(day);
       },
-      dayHovered: (day) => {
-        this.onHover(day);
+      dayHovered: (day, mouseover) => {
+        this.onHover(day, mouseover);
       }
     };
 
@@ -178,8 +178,8 @@ class DateRangePickerController {
       inputSelected: (day) => {
         this.inputInEndSelected(day);
       },
-      dayHovered: (day) => {
-        this.onHover(day);
+      dayHovered: (day, mouseover) => {
+        this.onHover(day, mouseover);
       }
     }
   }
@@ -268,8 +268,9 @@ class DateRangePickerController {
     }
   }
 
-  onHover(day) {
-    if (day.diff(this.rangeStart, 'days') > 0 && angular.isDefined(this.minRangeDay)) {
+  onHover(day, mouseover) {
+    console.log(day, mouseover);
+    if (mouseover && day.diff(this.rangeStart, 'days') > 0 && angular.isDefined(this.minRangeDay)) {
       if (angular.isDefined(day.mo)) {
         this.dayHovered = day.mo.clone();
       } else {

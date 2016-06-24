@@ -236,6 +236,7 @@ class CalendarController {
   }
 
   daySelected(day) {
+    this.dayHovered(day, false);
     if (!day.disabled) {
       if (this.interceptors.daySelected) {
         this.interceptors.daySelected.call(this.interceptors.context, day.mo);
@@ -243,10 +244,10 @@ class CalendarController {
     }
   }
 
-  dayHovered(day) {
+  dayHovered(day, mouseover) {
     if (!day.disabled) {
       if (this.interceptors.dayHovered) {
-        this.interceptors.dayHovered.call(this.interceptors.context, day.mo);
+        this.interceptors.dayHovered.call(this.interceptors.context, day.mo, mouseover);
       }
     }
   }

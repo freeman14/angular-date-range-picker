@@ -4,6 +4,7 @@ $cellWidth: 38px;
 $cellHeight: 38px;
 $disabledDayColor: #E2DFDE;
 $rangeColor: #97B7C7;
+$rangeHoverColor: #66c6e3;
 
 calendar {
   font-family: $mainFont;
@@ -134,8 +135,8 @@ calendar {
       }
 
       &.in-hover-range:not(.other-month):not(.disabled) {
-        background: red;
-        border-color: $mainColor;
+        background: $rangeHoverColor;
+        border-color: $rangeHoverColor;
         color: $white;
         border-style: double;
       }
