@@ -269,7 +269,6 @@ class DateRangePickerController {
   }
 
   onHover(day, mouseover) {
-    console.log(day, mouseover);
     if (mouseover && day.diff(this.rangeStart, 'days') > 0 && angular.isDefined(this.minRangeDay)) {
       if (angular.isDefined(day.mo)) {
         this.dayHovered = day.mo.clone();
