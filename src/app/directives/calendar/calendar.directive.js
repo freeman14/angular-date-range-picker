@@ -41,7 +41,7 @@ class CalendarController {
     this.Scope = $scope;
     this.Attrs = $attrs;
     this.api && this.setApi();
-    this.render();
+    this.firstRender();
   }
 
   setApi() {
@@ -50,7 +50,7 @@ class CalendarController {
     });
   }
 
-  render() {
+  firstRender() { 
     this.defaultWeekDaysNames = this.weekDaysName() || ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     this.firstDayOfWeek = this.weekStart() || 'su';
     this.daysOfWeek = this.buildWeek(this.firstDayOfWeek);
@@ -58,6 +58,10 @@ class CalendarController {
     this.interceptors = this.getInterceptors() || {};
     this.setListeners();
     this.daysName = this.setWeekDaysNames(this.daysOfWeek);
+  }
+
+  render() {
+    this.daysOfWeek = this.buildWeek(this.firstDayOfWeek);
   }
 
   setValue() {
