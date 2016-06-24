@@ -129,7 +129,7 @@ class DateRangePickerController {
           this.maxRangeDay = undefined;
         } else {
           this.interceptors.firstDaySelected && this.interceptors.firstDaySelected(day);
-          if (day.mo !== undefined) {
+          if (angular.isDefined(day.mo)) {
             this.minRangeDay = day.mo.clone();
             this.maxRangeDay = day.mo.clone().add(29, 'days');
           } else {
@@ -165,7 +165,7 @@ class DateRangePickerController {
           this.maxRangeDay = undefined;
         } else {
           this.interceptors.firstDaySelected && this.interceptors.firstDaySelected(day);
-          if (day.mo !== undefined) {
+          if (angular.isDefined(day.mo)) {
             this.minRangeDay = day.mo.clone();
             this.maxRangeDay = day.mo.clone().add(29, 'days');
           } else {
@@ -269,8 +269,8 @@ class DateRangePickerController {
   }
 
   onHover(day) {
-    if (day.diff(this.rangeStart, 'days') > 0 && this.minRangeDay !== undefined) {
-      if (day.mo !== undefined) {
+    if (day.diff(this.rangeStart, 'days') > 0 && angular.isDefined(this.minRangeDay)) {
+      if (angular.isDefined(day.mo)) {
         this.dayHovered = day.mo.clone();
       } else {
         this.dayHovered = day.clone();

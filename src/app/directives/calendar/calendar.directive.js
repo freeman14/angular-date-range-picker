@@ -96,7 +96,7 @@ class CalendarController {
     this.Scope.$watch(() => {
       return this.hovered();
     }, (hovered) => {
-      this.updateDaysProperties(this.calendar.monthWeeks);
+      this.updateDaysProperties(this.calendar.monthWeeks, hovered);
     });
 
     this.Scope.$watchGroup([
@@ -131,7 +131,7 @@ class CalendarController {
           day.disabled = day.mo.isAfter(maxDay, 'day');
         }
 
-        if (!day.disabled && this.minRangeDay() !== undefined) {
+        if (!day.disabled && angular.isDefined(this.minRangeDay())) {
           day.disabled = day.mo.isAfter(this.maxRangeDay(), 'day');
         }
 
