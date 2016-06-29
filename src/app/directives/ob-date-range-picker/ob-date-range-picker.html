@@ -1,9 +1,4 @@
-<!--<div class="picker-dropdown-container" ng-class="{'disabled': obDateRangePicker.disabled()}">-->
-  <!--<div class="picker-dropdown" ng-class="{'open': obDateRangePicker.isPickerVisible}" ng-click="obDateRangePicker.togglePicker()">-->
-    <!--<span>{{obDateRangePicker.value}}</span>-->
-  </div>
-  <!--<div class="picker" ng-class="{'open': obDateRangePicker.isPickerVisible}" ng-show="obDateRangePicker.isPickerVisible">-->
-    
+  </div>    
     <div class="date-range">
       <date-range-picker
         api="obDateRangePicker.pickerApi"
@@ -16,9 +11,9 @@
         min-day="obDateRangePicker._getMinDay()"
         max-day="obDateRangePicker._getMaxDay()"
         month-format="obDateRangePicker.monthFormat()"
-        input-format="obDateRangePicker.inputFormat()">
+        input-format="obDateRangePicker.inputFormat()"
+        turn="obDateRangePicker.turn()">
       </date-range-picker>
     </div>
 
-  <!--</div>-->
 </div>

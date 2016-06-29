@@ -22,7 +22,8 @@ export function Calendar() {
       showInput: '&',
       hovered: '&',
       api: '=?',
-      static: '=?'
+      static: '=?',
+      turn: '&'
     },
     templateUrl: 'app/directives/calendar/calendar.html',
     controller: CalendarController,
@@ -50,7 +51,7 @@ class CalendarController {
     });
   }
 
-  firstRender() { 
+  firstRender() {
     this.defaultWeekDaysNames = this.weekDaysName() || ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     this.firstDayOfWeek = this.weekStart() || 'su';
     this.daysOfWeek = this.buildWeek(this.firstDayOfWeek);
@@ -118,16 +119,58 @@ class CalendarController {
     let selectedDay = this.selectedDay();
     let rangeStart = this.rangeStart();
     let rangeEnd = this.rangeEnd();
+    let turn = this.turn();
+    let isHoverInRange = this.isHoverInRange();
+    let minRangeDay = this.minRangeDay();
+    let maxRangeDay = this.maxRangeDay();
+
+    if (turn === 'second' && typeof maxRangeDay === 'undefined') {
+      minRangeDay = rangeStart.clone();
+      maxRangeDay = rangeStart.clone().add(29, 'days');
+    }
+
     monthWeeks.forEach((week) => {
       week.forEach((day) => {
         day.selected = day.mo.isSame(selectedDay || null, 'day');
-        day.inRange =  this.isInRange(day.mo);
-        day.inHoverRange =  this.isInHoverRange(day.mo);
+        day.inRange = this.isInRange(day.mo);
+        // day.inHoverRange = this.isInHoverRange(day.mo);
         day.rangeStart = day.mo.isSame(rangeStart || null, 'day');
         day.rangeEnd = day.mo.isSame(rangeEnd || null, 'day');
+
         day.inStaticRange = this.isInStaticRange(day.mo);
         day.staticRangeStart = day.mo.isSame(this.static.start || null, 'day');
         day.staticRangeEnd = day.mo.isSame(this.static.end || null, 'day');
+
+        if (turn === 'second' && typeof this.hovered() !== 'undefined') {
+
+          day.inRange = this.isInSecondHoverRange(day.mo, maxRangeDay);
+
+          if (day.inRange) {
+            day.rangeEnd = false;
+            day.selected = false;
+          } else {
+            day.rangeStart = false;
+            day.rangeEnd = false;
+            day.selected = false;
+            day.inRange = false;
+          }
+
+
+        } else if (turn === 'first' && typeof this.hovered() !== 'undefined') {
+
+          if (isHoverInRange === true) {
+            day.inRange = this.isInFirstHoverRange(day);
+            day.rangeStart = false;
+            day.selected = false;
+          } else {
+            day.rangeStart = false;
+            day.rangeEnd = false;
+            day.selected = false;
+            day.inRange = false;
+          }
+
+        }
+
         if (minDay) {
           day.disabled = day.mo.isBefore(minDay, 'day');
         }
@@ -135,8 +178,8 @@ class CalendarController {
           day.disabled = day.mo.isAfter(maxDay, 'day');
         }
 
-        if (!day.disabled && angular.isDefined(this.minRangeDay())) {
-          day.disabled = day.mo.isAfter(this.maxRangeDay(), 'day');
+        if (!day.disabled && angular.isDefined(minRangeDay)) {
+          day.disabled = day.mo.isAfter(maxRangeDay, 'day');
         }
 
       });
@@ -226,6 +269,54 @@ class CalendarController {
     let rangeStart = this.rangeStart() || null;
     let hovered = this.hovered() || null;
     inRange = day.isBetween(rangeStart, hovered) || day.isSame(hovered, 'day');
+    return inRange;
+  }
+
+  isHoverInRange() {
+    let hovered = this.hovered() || null;
+    let rangeStart = this.rangeEnd().clone().subtract(29, 'days') || null;
+    let rangeEnd = this.rangeEnd() || null;
+
+    if (hovered !== null) {
+      return hovered.isBetween(rangeStart, rangeEnd);
+    }
+
+    return undefined;
+
+  }
+
+  isInFirstHoverRange(day) {
+    let d = typeof day.mo !== 'undefined' ? day.mo : day;
+    let inRange = false;
+    let rangeEnd = this.rangeEnd() || null;
+    let hovered = this.hovered() || null;
+    inRange = d.isBetween(hovered, rangeEnd) || d.isSame(hovered, 'day');
+    return inRange;
+  }
+
+  isInSecondHoverRange(day, maxRangeDay) {
+    let d = typeof day.mo !== 'undefined' ? day.mo : day;
+    let inRange = false;
+    let hovered = this.hovered() || null;
+    let rangeStart = this.rangeStart() || null;
+
+    if (d.isBetween(rangeStart, maxRangeDay) || d.format('MM-DD-YYYY') == rangeStart.format('MM-DD-YYYY')) {
+      inRange = d.isBetween(rangeStart, hovered) || d.isSame(rangeStart, 'day') || d.isSame(hovered, 'day');
+
+      if (hovered.diff(rangeStart, 'days') < 0) {
+        inRange = false;
+      }
+
+    }
+
+    return inRange;
+  }
+
+  isOutOfFirstHoverRange() {
+    let inRange = false;
+    let rangeEnd = this.rangeEnd() || null;
+    let hovered = this.hovered() || null;
+    inRange = hovered.diff(rangeEnd, 'days') < -29;
     return inRange;
   }
 

@@ -21,6 +21,7 @@ export function ObDateRangePicker() {
       secondDayChange: '&',
       disabled: '&',
       calendarsAlwaysOn: '&',
+      turn: '&',
       api: '=?'
     },
     controller: ObDateRangePickerController,
@@ -123,10 +124,10 @@ class ObDateRangePickerController {
   setPickerInterceptors() {
     this.pickerInterceptors = {
       firstDaySelected: (day) => {
-        this.firstDayChange({ day: day })
+        this.firstDayChange({ days: day })
       },
       secondDaySelected: (day) => {
-        this.secondDayChange({ day: day });
+        this.secondDayChange({ days: day });
       },
       rangeSelectedByClick: () => {
         this.applyChanges();
@@ -223,10 +224,6 @@ class ObDateRangePickerController {
     }
   }
 
-  hidePicker() {
-    this.isPickerVisible = false;
-  }
-
   setRange(range = this._range) {
     if (this.format()) {
       this.range.start = range.start.format(this.getFormat());
@@ -298,7 +295,6 @@ class ObDateRangePickerController {
 
   applyChanges(callApply = true) {
     this.setRange();
-    this.hidePicker();
     if (callApply && this.onApply) {
       this.onApply({start: this._range.start, end: this._range.end});
     }

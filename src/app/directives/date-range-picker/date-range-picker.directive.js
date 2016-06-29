@@ -14,7 +14,8 @@ export function DateRangePicker() {
       inputFormat: '&',
       weekDaysName: '&',
       linkedCalendars: '&',
-      interceptors: '&'
+      interceptors: '&',
+      turn: '&'
     },
     templateUrl: 'app/directives/date-range-picker/date-range-picker.html',
     controller: DateRangePickerController,
@@ -123,12 +124,18 @@ class DateRangePickerController {
         this.daySelected(day);
 
         if (this.daysSelected == 2) {
-          this.interceptors.rangeSelectedByClick && this.interceptors.rangeSelectedByClick();
-          this.interceptors.secondDaySelected && this.interceptors.secondDaySelected(day);
+          // this.interceptors.rangeSelectedByClick && this.interceptors.rangeSelectedByClick();
+          this.interceptors.secondDaySelected && this.interceptors.secondDaySelected({
+            start: this.rangeStart,
+            end: this.rangeEnd
+          });
           this.minRangeDay = undefined;
           this.maxRangeDay = undefined;
         } else {
-          this.interceptors.firstDaySelected && this.interceptors.firstDaySelected(day);
+          this.interceptors.firstDaySelected && this.interceptors.firstDaySelected({
+            start: this.rangeStart,
+            end: this.rangeEnd
+          });
           if (angular.isDefined(day.mo)) {
             this.minRangeDay = day.mo.clone();
             this.maxRangeDay = day.mo.clone().add(29, 'days');
@@ -157,14 +164,20 @@ class DateRangePickerController {
       daySelected: (day) => {
         this.dayInEndSelected(day);
         this.daySelected(day);
-
+        
         if (this.daysSelected == 2) {
-          this.interceptors.rangeSelectedByClick && this.interceptors.rangeSelectedByClick();
-          this.interceptors.secondDaySelected && this.interceptors.secondDaySelected(day);
+          // this.interceptors.rangeSelectedByClick && this.interceptors.rangeSelectedByClick();
+          this.interceptors.secondDaySelected && this.interceptors.secondDaySelected({
+            start: this.rangeStart,
+            end: this.rangeEnd
+          });
           this.minRangeDay = undefined;
           this.maxRangeDay = undefined;
         } else {
-          this.interceptors.firstDaySelected && this.interceptors.firstDaySelected(day);
+          this.interceptors.firstDaySelected && this.interceptors.firstDaySelected({
+            start: this.rangeStart,
+            end: this.rangeEnd
+          });
           if (angular.isDefined(day.mo)) {
             this.minRangeDay = day.mo.clone();
             this.maxRangeDay = day.mo.clone().add(29, 'days');
@@ -246,30 +259,35 @@ class DateRangePickerController {
   }
 
   daySelected(day) {
-    switch (this.daysSelected) {
-      case 0:
-        this.rangeStart = day;
-        this.daysSelected = 1;
-        break;
-      case 1:
-        if (day.diff(this.rangeStart, 'days') < 0) {
-          this.rangeStart = day;
-        } else {
-          this.rangeEnd = day;
-          this.daysSelected = 2;
-          this.updateRange();
-        }
-        break;
-      case 2:
-        this.daysSelected = 1;
-        this.rangeStart = day;
-        this.rangeEnd = null;
-        break;
+    let turn = this.turn();
+
+    if (turn === 'first') {
+      
+      if (day.diff(this.rangeEnd, 'days') < -29) {
+        this.rangeEnd = day.clone();
+      }  
+
+      this.rangeStart = day;
+      this.daysSelected = 1;
+
+    } else if (turn === 'second') {
+      
+      if (day.diff(this.rangeStart, 'days') < 0) {
+        this.rangeStart = day.clone();  
+      }
+
+      this.rangeEnd = day;
+
+      this.daysSelected = 2;
+
     }
+
+    this.updateRange();
+
   }
 
   onHover(day, mouseover) {
-    if (mouseover && day.diff(this.rangeStart, 'days') > 0 && angular.isDefined(this.minRangeDay)) {
+    if (mouseover) {
       if (angular.isDefined(day.mo)) {
         this.dayHovered = day.mo.clone();
       } else {
@@ -318,43 +336,9 @@ class DateRangePickerController {
         this.endCalendar = newStart.clone().add(1, 'M');
       }
 
-      if (this.areCalendarsLinked()) {
-        if (!(newStart.isSame(this.startCalendar, 'M') || newStart.isSame(this.endCalendar, 'M'))) {
-          if (newStart.isSame(oldStart, 'M') && newEnd && !newEnd.isSame(oldEnd, 'M')) {
-            this.startCalendar = newEnd.clone().subtract(1, 'M');
-            this.endCalendar = newEnd;
-          } else {
-            this.startCalendar = newStart;
-            this.endCalendar = newStart.clone().add(1, 'M');
-          }
-        } else if (newEnd && newEnd.isAfter(this.endCalendar, 'M')) {
-          this.startCalendar = newEnd;
-          this.endCalendar = newEnd.clone().add(1, 'M');
-        } else if (!newStart.isSame(this.endCalendar, 'M')) {
-          this.startCalendar = newStart;
-          this.endCalendar = newStart.clone().add(1, 'M');
-        }
+        this.startCalendar = newStart;
+        this.endCalendar = newStart.clone().add(1, 'M');
 
-      } else {
-        if (!(newStart.isSame(this.startCalendar, 'M') || newStart.isSame(this.endCalendar, 'M'))) {
-          if (newStart.isBefore(this.startCalendar, 'M')) {
-            this.startCalendar = newStart;
-
-            if (newEnd && !newEnd.isSame(this.endCalendar, 'M')) {
-              if (newStart.isSame(newEnd, 'M')) {
-                this.endCalendar = newStart.clone().add(1, "M");
-              } else {
-                this.endCalendar = newEnd;
-              }
-            }
-          } else if (newStart.isAfter(this.endCalendar)) {
-            this.startCalendar = newStart;
-            this.endCalendar = newStart.clone().add(1, 'M');
-          }
-        } else if (newEnd && newEnd.isAfter(this.endCalendar, 'M')) {
-          this.endCalendar = newEnd;
-        }
-      }
     });
   }
 
