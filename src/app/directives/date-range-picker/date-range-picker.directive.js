@@ -178,13 +178,13 @@ class DateRangePickerController {
             start: this.rangeStart,
             end: this.rangeEnd
           });
-          if (angular.isDefined(day.mo)) {
-            this.minRangeDay = day.mo.clone();
-            this.maxRangeDay = day.mo.clone().add(29, 'days');
-          } else {
-            this.minRangeDay = day.clone();
-            this.maxRangeDay = day.clone().add(29, 'days');
-          }
+          // if (angular.isDefined(day.mo)) {
+          //   this.minRangeDay = day.mo.clone();
+          //   this.maxRangeDay = day.mo.clone().add(29, 'days');
+          // } else {
+          //   this.minRangeDay = day.clone();
+          //   this.maxRangeDay = day.clone().add(29, 'days');
+          // }
         }
 
       },

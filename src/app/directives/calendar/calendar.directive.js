@@ -124,6 +124,11 @@ class CalendarController {
     let minRangeDay = this.minRangeDay();
     let maxRangeDay = this.maxRangeDay();
 
+    // if (!this.Scope.$$phase) {
+    //   // console.log(this.Scope.$$phase);
+    //   this.Scope.$apply();
+    // }
+
     if (turn === 'second' && typeof maxRangeDay === 'undefined') {
       minRangeDay = rangeStart.clone();
       maxRangeDay = rangeStart.clone().add(29, 'days');
@@ -300,7 +305,8 @@ class CalendarController {
     let hovered = this.hovered() || null;
     let rangeStart = this.rangeStart() || null;
 
-    if (d.isBetween(rangeStart, maxRangeDay) || d.format('MM-DD-YYYY') == rangeStart.format('MM-DD-YYYY')) {
+    if (d.isBetween(rangeStart, maxRangeDay.endOf('day')) || d.format('MM-DD-YYYY') == rangeStart.format('MM-DD-YYYY')) {
+      
       inRange = d.isBetween(rangeStart, hovered) || d.isSame(rangeStart, 'day') || d.isSame(hovered, 'day');
 
       if (hovered.diff(rangeStart, 'days') < 0) {

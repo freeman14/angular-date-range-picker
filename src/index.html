@@ -163,23 +163,16 @@
           ng-value="false" ng-change="range.render()">
       </div>
     </div>
+    <div>
+      <input type="radio" name="gender" ng-model="range.turn" value="first">first<br>
+      <input type="radio" name="gender" ng-model="range.turn" value="second"> second
+    </div>
+
 
     <div class="ob-datepicker-container">
-      <ob-daterangepicker 
-        ng-class="{'up': range.dropsUp}" 
-        class="{{range.opens}}" 
-        min-day="range.min" 
-        max-day="range.max" 
-        linked-calendars="range.linked"
-        api="range.dateRangeApi" 
-        on-apply="range.rangeApplied(start, end)" 
-        ranges="range.ranges" 
-        range="range.range" 
-        format="range.format"
-        turn="range.turn" 
-        first-day-change="range.firstDaySelected(days)"
-        second-day-change="range.secondDaySelected(days)"
-        >
+      <ob-daterangepicker ng-class="{'up': range.dropsUp}" class="{{range.opens}}" min-day="range.min" max-day="range.max" linked-calendars="range.linked"
+        api="range.dateRangeApi" on-apply="range.rangeApplied(start, end)" ranges="range.ranges" range="range.range" format="range.format"
+        turn="range.turn" first-day-change="range.firstDaySelected(days)" second-day-change="range.secondDaySelected(days)">
       </ob-daterangepicker>
     </div>
     <br/>
@@ -226,16 +219,15 @@
           console.log(start, end);
         };
 
-        this.turn = 'second';
+        this.turn = 'first';
 
         this.firstDaySelected = days => {
-          console.log(days);
-          this.turn = 'first';
+          this.turn = 'second';
         };
 
         this.secondDaySelected = days => {
           console.log(days);
-          this.turn = 'second';
+          this.turn = 'first';
         };
 
         // this.setDateRange = function() {
