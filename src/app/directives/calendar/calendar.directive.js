@@ -186,7 +186,7 @@ class CalendarController {
           day.disabled = false;
         }
 
-        if (!day.disabled && angular.isDefined(minRangeDay)) {
+        if (turn === 'second') {
           day.disabled = day.mo.isAfter(maxRangeDay, 'day');
         }
 
@@ -286,7 +286,7 @@ class CalendarController {
     let rangeEnd = this.rangeEnd() || null;
 
     if (hovered !== null) {
-      return hovered.isBetween(rangeStart, rangeEnd);
+      return hovered.isBetween(rangeStart, rangeEnd.endOf('day')) || hovered.isSame(rangeStart, 'day') || hovered.isSame(rangeEnd, 'day');
     }
 
     return undefined;
@@ -298,7 +298,8 @@ class CalendarController {
     let inRange = false;
     let rangeEnd = this.rangeEnd() || null;
     let hovered = this.hovered() || null;
-    inRange = d.isBetween(hovered, rangeEnd) || d.isSame(hovered, 'day');
+    
+    inRange = d.isBetween(hovered, rangeEnd.endOf('day')) || d.isSame(hovered, 'day') || d.isSame(rangeEnd, 'day');
     return inRange;
   }
 
