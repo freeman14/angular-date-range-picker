@@ -106,7 +106,8 @@ class CalendarController {
 
     this.Scope.$watchGroup([
       () => this.rangeStart(),
-      () => this.rangeEnd()
+      () => this.rangeEnd(),
+      () => this.turn()
     ], () => {
       this.setValue();
       this.updateDaysProperties(this.calendar.monthWeeks);
@@ -181,6 +182,8 @@ class CalendarController {
         }
         if (maxDay && !day.disabled) {
           day.disabled = day.mo.isAfter(maxDay, 'day');
+        } else {
+          day.disabled = false;
         }
 
         if (!day.disabled && angular.isDefined(minRangeDay)) {
