@@ -153,6 +153,10 @@ calendar {
         color: $disabledDayColor;
       }
 
+      &.future {
+        color: $disabledDayColor;
+      }
+
       &.in-static-range::after {
         content: '';
         background: rgba(199, 233, 244, 0.5);

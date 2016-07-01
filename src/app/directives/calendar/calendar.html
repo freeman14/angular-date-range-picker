@@ -16,6 +16,7 @@
     <tbody>
       <tr class="week" ng-repeat="week in month.calendar.monthWeeks track by $index">
         <td class="day" ng-repeat="day in week track by $index" ng-class="{
+                'future': day.future,
                 'selected': day.selected,
                 'current': day.currentDay,
                 'other-month': !day.currentMonth,

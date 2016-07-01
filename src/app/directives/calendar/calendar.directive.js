@@ -137,8 +137,10 @@ class CalendarController {
 
     monthWeeks.forEach((week) => {
       week.forEach((day) => {
+        
         day.selected = day.mo.isSame(selectedDay || null, 'day');
         day.inRange = this.isInRange(day.mo);
+        day.future = day.mo.isAfter(maxDay, 'day');
         // day.inHoverRange = this.isInHoverRange(day.mo);
         day.rangeStart = day.mo.isSame(rangeStart || null, 'day');
         day.rangeEnd = day.mo.isSame(rangeEnd || null, 'day');
@@ -187,7 +189,7 @@ class CalendarController {
         }
 
         if (turn === 'second') {
-          day.disabled = day.mo.isAfter(maxRangeDay, 'day');
+          day.disabled = day.mo.isAfter(maxRangeDay, 'day'); 
         }
 
       });
@@ -342,7 +344,7 @@ class CalendarController {
 
   daySelected(day) {
     this.dayHovered(day, false);
-    if (!day.disabled) {
+    if (!day.disabled && !day.future) {
       if (this.interceptors.daySelected) {
         this.interceptors.daySelected.call(this.interceptors.context, day.mo);
       }
@@ -350,7 +352,7 @@ class CalendarController {
   }
 
   dayHovered(day, mouseover) {
-    if (!day.disabled) {
+    if (!day.disabled && !day.future) {
       if (this.interceptors.dayHovered) {
         this.interceptors.dayHovered.call(this.interceptors.context, day.mo, mouseover);
       }
