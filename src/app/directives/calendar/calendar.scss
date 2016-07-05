@@ -127,6 +127,11 @@ calendar {
         visibility: hidden;
       }
 
+      &.opacity.in-range {
+        background: rgba(0, 157, 205, 0.35) !important;
+        border-color: rgba(0, 157, 205, 0.35) !important;
+      }
+
       &.in-range:not(.other-month):not(.disabled) {
         background: $mainColor;
         border-color: $mainColor;

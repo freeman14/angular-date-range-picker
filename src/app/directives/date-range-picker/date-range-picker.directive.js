@@ -327,9 +327,6 @@ class DateRangePickerController {
       return this.rangeEnd;
     }], (newRange, oldRange) => {
       let newStart = newRange[0];
-      let newEnd = newRange[1];
-      let oldStart = oldRange[0];
-      let oldEnd = oldRange[1];
 
       if (!this.startCalendar && !this.endCalendar) {
         this.startCalendar = newStart;

@@ -122,16 +122,9 @@ class CalendarController {
     let rangeEnd = this.rangeEnd();
     let turn = this.turn();
     let isHoverInRange = this.isHoverInRange();
-    let minRangeDay = this.minRangeDay();
     let maxRangeDay = this.maxRangeDay();
 
-    // if (!this.Scope.$$phase) {
-    //   // console.log(this.Scope.$$phase);
-    //   this.Scope.$apply();
-    // }
-
     if (turn === 'second' && typeof maxRangeDay === 'undefined') {
-      minRangeDay = rangeStart.clone();
       maxRangeDay = rangeStart.clone().add(29, 'days');
     }
 
@@ -148,7 +141,7 @@ class CalendarController {
         day.inStaticRange = this.isInStaticRange(day.mo);
         day.staticRangeStart = day.mo.isSame(this.static.start || null, 'day');
         day.staticRangeEnd = day.mo.isSame(this.static.end || null, 'day');
-
+        day.opacity = false;
         if (turn === 'second' && typeof this.hovered() !== 'undefined') {
 
           day.inRange = this.isInSecondHoverRange(day.mo, maxRangeDay);
@@ -160,7 +153,7 @@ class CalendarController {
             day.rangeStart = false;
             day.rangeEnd = false;
             day.selected = false;
-            day.inRange = false;
+            day.opacity = true;
           }
 
 
@@ -174,7 +167,7 @@ class CalendarController {
             day.rangeStart = false;
             day.rangeEnd = false;
             day.selected = false;
-            day.inRange = false;
+            day.opacity = true;
           }
 
         }
