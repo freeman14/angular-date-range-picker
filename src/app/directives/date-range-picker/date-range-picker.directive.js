@@ -164,7 +164,7 @@ class DateRangePickerController {
       daySelected: (day) => {
         this.dayInEndSelected(day);
         this.daySelected(day);
-        
+
         if (this.daysSelected == 2) {
           // this.interceptors.rangeSelectedByClick && this.interceptors.rangeSelectedByClick();
           this.interceptors.secondDaySelected && this.interceptors.secondDaySelected({
@@ -262,23 +262,25 @@ class DateRangePickerController {
     let turn = this.turn();
 
     if (turn === 'first') {
-      
+
       if (day.diff(this.rangeEnd, 'days') < -29) {
         this.rangeEnd = day.clone();
-      }  
+      }
 
       this.rangeStart = day;
       this.daysSelected = 1;
 
     } else if (turn === 'second') {
-      
+
+      // If second day is before current first day, then update first day instead and promt to update second day
       if (day.diff(this.rangeStart, 'days') < 0) {
-        this.rangeStart = day.clone();  
+        this.rangeEnd = day.clone();
+        this.rangeStart = day;
+        this.daysSelected = 1;
+      } else {
+        this.rangeEnd = day;
+        this.daysSelected = 2;
       }
-
-      this.rangeEnd = day;
-
-      this.daysSelected = 2;
 
     }
 
@@ -333,8 +335,8 @@ class DateRangePickerController {
         this.endCalendar = newStart.clone().add(1, 'M');
       }
 
-        this.startCalendar = newStart;
-        this.endCalendar = newStart.clone().add(1, 'M');
+      this.startCalendar = newStart;
+      this.endCalendar = newStart.clone().add(1, 'M');
 
     });
   }
