@@ -111,6 +111,7 @@ class CalendarController {
     ], () => {
       this.setValue();
       this.updateDaysProperties(this.calendar.monthWeeks);
+      this.showRightArrow();
     });
   }
 
@@ -409,14 +410,17 @@ class CalendarController {
 
   showRightArrow() {
     if (
+      this.turn() === 'second' ||
       this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY') ||
       this.getMonth() > this.maxDay() ||
       this.getMonth() > this.maxRangeDay() ||
       this.getMonth() > this.maxMonth()
     ) {
+      this.hideRightArrow = false;
       return false;
     }
-    return this.maxMonth() ? !this.maxMonth().isSame(this.getMonth().clone().add(1, 'M'), 'M') : true;
+    this.hideRightArrow = this.maxMonth() ? !this.maxMonth().isSame(this.getMonth().clone().add(1, 'M'), 'M') : true;
+    return this.hideRightArrow;
   }
 
   _showInput() {
