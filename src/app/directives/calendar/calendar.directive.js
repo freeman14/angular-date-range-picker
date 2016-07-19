@@ -397,6 +397,14 @@ class CalendarController {
   }
 
   showRightArrow() {
+    if (
+      this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY') ||
+      this.getMonth() > this.maxDay() ||
+      this.getMonth() > this.maxRangeDay() ||
+      this.getMonth() > this.maxMonth()
+    ) {
+      return false;
+    }
     return this.maxMonth() ? !this.maxMonth().isSame(this.getMonth().clone().add(1, 'M'), 'M') : true;
   }
 
