@@ -123,6 +123,11 @@ class CalendarController {
     let turn = this.turn();
     let isHoverInRange = this.isHoverInRange();
     let maxRangeDay = this.maxRangeDay();
+    let onlySideDays = false;
+
+    if (this.static && this.static.end) {
+      onlySideDays = this.static.end.diff(this.static.start, 'day') > 29;
+    }
 
     if (turn === 'second' && typeof maxRangeDay === 'undefined') {
       maxRangeDay = rangeStart.clone().add(29, 'days');
@@ -130,7 +135,7 @@ class CalendarController {
 
     monthWeeks.forEach((week) => {
       week.forEach((day) => {
-        
+
         day.selected = day.mo.isSame(selectedDay || null, 'day');
         day.inRange = this.isInRange(day.mo);
         day.future = day.mo.isAfter(maxDay, 'day');
@@ -138,9 +143,15 @@ class CalendarController {
         day.rangeStart = day.mo.isSame(rangeStart || null, 'day');
         day.rangeEnd = day.mo.isSame(rangeEnd || null, 'day');
 
-        day.inStaticRange = this.isInStaticRange(day.mo);
         day.staticRangeStart = day.mo.isSame(this.static.start || null, 'day');
         day.staticRangeEnd = day.mo.isSame(this.static.end || null, 'day');
+
+        if (!onlySideDays) {
+          day.inStaticRange = this.isInStaticRange(day.mo);
+        } else if (day.staticRangeEnd || day.staticRangeStart) {
+          day.inStaticRange = this.isInStaticRange(day.mo);
+        }
+
         day.opacity = false;
         if (turn === 'second' && typeof this.hovered() !== 'undefined') {
 
@@ -182,7 +193,7 @@ class CalendarController {
         }
 
         if (turn === 'second') {
-          day.disabled = day.mo.isAfter(maxRangeDay, 'day'); 
+          day.disabled = day.mo.isAfter(maxRangeDay, 'day');
         }
 
       });
@@ -293,7 +304,7 @@ class CalendarController {
     let inRange = false;
     let rangeEnd = this.rangeEnd() || null;
     let hovered = this.hovered() || null;
-    
+
     inRange = d.isBetween(hovered, rangeEnd.endOf('day')) || d.isSame(hovered, 'day') || d.isSame(rangeEnd, 'day');
     return inRange;
   }
@@ -305,7 +316,7 @@ class CalendarController {
     let rangeStart = this.rangeStart() || null;
 
     if (d.isBetween(rangeStart, maxRangeDay.endOf('day')) || d.format('MM-DD-YYYY') == rangeStart.format('MM-DD-YYYY')) {
-      
+
       inRange = d.isBetween(rangeStart, hovered) || d.isSame(rangeStart, 'day') || d.isSame(hovered, 'day');
 
       if (hovered.diff(rangeStart, 'days') < 0) {
