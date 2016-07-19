@@ -331,12 +331,17 @@ class DateRangePickerController {
       let newStart = newRange[0];
 
       if (!this.startCalendar && !this.endCalendar) {
+        if (newStart.date() > 15 && newStart.format('MM-YYYY') !== this.maxDay().format('MM-YYYY')) {
+          this.startCalendar = newStart;
+          this.endCalendar = newStart.clone().add(1, 'M');
+        } else {
+          this.startCalendar = newStart.clone().subtract(1, 'M');
+          this.endCalendar = newStart;
+        }
+      } else {
         this.startCalendar = newStart;
         this.endCalendar = newStart.clone().add(1, 'M');
       }
-
-      this.startCalendar = newStart;
-      this.endCalendar = newStart.clone().add(1, 'M');
 
     });
   }

@@ -236,17 +236,8 @@
         };
 
         this.secondDaySelected = days => {
-          console.log(days);
           this.turn = 'first';
         };
-
-        // this.setDateRange = function() {
-        //   _this.dateRangeApi.setDateRange({
-        //     start: moment(),
-        //     end: moment().add(2, 'd')
-        //   });
-        // };
-
 
         this.render = function(e) {
           this.dateRangeApi.render();
