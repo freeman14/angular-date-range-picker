@@ -330,9 +330,12 @@ class DateRangePickerController {
     }], (newRange, oldRange) => {
       let newStart = newRange[0];
 
+      
       if (!this.startCalendar && !this.endCalendar) {
         
-        if (this.maxDay() && newStart && newStart.format('MM-YYYY') === this.maxDay().format('MM-YYYY')) {
+        if (typeof this.maxDay() !== 'undefined' &&  
+            typeof newStart !== 'undefined' && 
+            newStart.format('MM-YYYY') === this.maxDay().format('MM-YYYY')) {
           this.startCalendar = newStart.clone().subtract(1, 'M');
           this.endCalendar = newStart;
           return;
