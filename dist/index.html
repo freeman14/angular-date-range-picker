@@ -86,6 +86,10 @@
         };
 
         this.render = function(e) {
+          this.range = {
+            start: moment(),
+            end: moment()
+          };
           this.dateRangeApi.render();
         }
 

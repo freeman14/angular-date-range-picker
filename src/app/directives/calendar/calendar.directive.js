@@ -157,17 +157,9 @@ class CalendarController {
         if (turn === 'second' && typeof this.hovered() !== 'undefined') {
 
           day.inRange = this.isInSecondHoverRange(day.mo, maxRangeDay);
-
-          if (day.inRange) {
-            day.rangeEnd = false;
-            day.selected = false;
-          } else {
-            day.rangeStart = false;
-            day.rangeEnd = false;
-            day.selected = false;
-            day.opacity = true;
+          if (!day.inRange && rangeStart <= day.mo && day.mo <= rangeEnd) {
+            day.inRange = true;
           }
-
 
         } else if (turn === 'first' && typeof this.hovered() !== 'undefined') {
 
