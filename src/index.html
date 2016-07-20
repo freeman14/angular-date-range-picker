@@ -172,9 +172,7 @@
     <div class="ob-datepicker-container">
       <ob-daterangepicker ng-class="{'up': range.dropsUp}" class="{{range.opens}}" min-day="range.min" max-day="range.max" linked-calendars="range.linked"
         api="range.dateRangeApi" on-apply="range.rangeApplied(start, end)" ranges="range.ranges" range="range.range" format="range.format"
-        turn="range.turn"
-        static="range.static" 
-        first-day-change="range.firstDaySelected(days)" second-day-change="range.secondDaySelected(days)">
+        turn="range.turn" static="range.static" first-day-change="range.firstDaySelected(days)" second-day-change="range.secondDaySelected(days)">
       </ob-daterangepicker>
     </div>
     <br/>
@@ -240,6 +238,10 @@
         };
 
         this.render = function(e) {
+          this.range = {
+            start: moment(),
+            end: moment()
+          };
           this.dateRangeApi.render();
         }
 
