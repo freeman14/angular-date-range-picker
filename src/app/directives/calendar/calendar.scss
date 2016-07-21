@@ -110,8 +110,7 @@ calendar {
 
       &:hover:not(.in-range):not(.disabled) {
         cursor: pointer;
-        border-color: #80CFE7;
-        border-style: double;
+        border: 1px double #80CFE7;
       }
 
       &.selected:not(.other-month):not(.disabled) {
@@ -127,23 +126,21 @@ calendar {
         visibility: hidden;
       }
 
-      &.opacity.in-range {
-        background: rgba(0, 157, 205, 0.35) !important;
-        border-color: rgba(0, 157, 205, 0.35) !important;
+      &.opacity.in-range:not(.other-month) {
+        background: $mainColor !important;
+        border: 1px double $mainColor !important;;
       }
 
       &.in-range:not(.other-month):not(.disabled) {
         background: $mainColor;
-        border-color: $mainColor;
+        border: 1px double $mainColor;
         color: $white;
-        border-style: double;
       }
 
       &.in-hover-range:not(.other-month):not(.disabled) {
         background: $rangeHoverColor;
-        border-color: $rangeHoverColor;
+        border: 1px double $rangeHoverColor;
         color: $white;
-        border-style: double;
       }
 
       &.range-start:not(.other-month):not(.disabled) {

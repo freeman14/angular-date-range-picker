@@ -157,9 +157,15 @@ class CalendarController {
         if (turn === 'second' && typeof this.hovered() !== 'undefined') {
 
           day.inRange = this.isInSecondHoverRange(day.mo, maxRangeDay);
-          if (!day.inRange && rangeStart <= day.mo && day.mo <= rangeEnd) {
+
+          if (isHoverInRange === true) {
+            day.rangeEnd = false;
+          }
+
+          if (this.hovered() < rangeStart && rangeStart <= day.mo && day.mo <= rangeEnd) {
             day.inRange = true;
           }
+
 
         } else if (turn === 'first' && typeof this.hovered() !== 'undefined') {
 
@@ -402,12 +408,12 @@ class CalendarController {
 
   showRightArrow() {
     if (
-      typeof this.getMonth() === 'object' && 
-      (this.turn() === 'second' || 
-      this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY') ||
-      this.getMonth() > this.maxDay() ||
-      this.getMonth() > this.maxRangeDay() ||
-      this.getMonth() > this.maxMonth())
+      typeof this.getMonth() === 'object' &&
+      (this.turn() === 'second' ||
+        this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY') ||
+        this.getMonth() > this.maxDay() ||
+        this.getMonth() > this.maxRangeDay() ||
+        this.getMonth() > this.maxMonth())
     ) {
       this.hideRightArrow = false;
       return false;
