@@ -415,7 +415,6 @@ class CalendarController {
         this.getMonth() > this.maxRangeDay() ||
         this.getMonth() > this.maxMonth())
     ) {
-      console.log(this.getMonth().format('MM-YYYY'));
       this.hideRightArrow = false;
       return false;
     }
