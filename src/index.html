@@ -31,40 +31,40 @@
     .config {
       margin-bottom: 10px;
     }
-    
+
     .section {
       display: inline-block;
       vertical-align: top;
       padding: 10px;
     }
-    
+
     .label {
       display: block;
       font-weight: bold;
       width: 150px;
     }
-    
+
     .input {
       height: 24px;
       font-size: 16px;
     }
-    
+
     .radio-label {
       vertical-align: super;
     }
-    
+
     .ob-datepicker-container,
     .ob-daypicker-container {
       position: relative;
     }
-    
+
     ob-daterangepicker,
     ob-daypicker {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
     }
-    
+
     .error-message {
       position: absolute;
       color: red;
@@ -177,7 +177,7 @@
     </div>
     <br/>
     <pre ng-cloak>{{range.range | json}}</pre>
-    <button ng-click="range.render()">asd</button>
+    <button ng-click="range.render()">today</button>
   </div>
 
   <!-- build:js(src) scripts/vendor.js -->
@@ -212,8 +212,8 @@
         this.linked = true;
         this.calendarsAlwaysOn = true;
         this.range = {
-          start: moment(),
-          end: moment().add(5, 'days')
+          start: moment('12-05-2016', this.format),
+          end: moment('15-06-2016', this.format)
         };
 
         this.static = {
@@ -225,7 +225,7 @@
           console.log(start, end);
         };
 
-        this.max = moment(); 
+        this.max = moment();
 
         this.turn = 'first';
 
