@@ -21,6 +21,7 @@ export function Calendar() {
       inputFormat: '&',
       showInput: '&',
       hovered: '&',
+      type: '&',
       api: '=?',
       static: '=?',
       turn: '&'
@@ -254,6 +255,7 @@ class CalendarController {
   }
 
   moveToPrev() {
+    this.hideRight = true;
     if (this.interceptors.moveToPrevClicked) {
       this.interceptors.moveToPrevClicked.call(this.interceptors.context);
     } else {
@@ -407,19 +409,24 @@ class CalendarController {
   }
 
   showRightArrow() {
-    if (
-      typeof this.getMonth() === 'object' &&
-      this.turn() === 'second' &&
-      (this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY') ||
-        this.getMonth() > this.maxDay() ||
-        this.getMonth() > this.maxRangeDay() ||
-        this.getMonth() > this.maxMonth())
-    ) {
+
+    if (this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY')) {
       this.hideRightArrow = false;
       return false;
     }
 
-    if (this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY')) {
+    if (this.turn() === 'second' && this.selectedDay().diff(this.getMonth(), 'days') > 30 && this.type() === 'second') {
+      this.hideRightArrow = true;
+      return true;
+    }
+
+    if (
+      typeof this.getMonth() === 'object' &&
+      (this.turn() === 'second' ||
+        this.getMonth() > this.maxDay() ||
+        this.getMonth() > this.maxRangeDay() ||
+        this.getMonth() > this.maxMonth())
+    ) {
       this.hideRightArrow = false;
       return false;
     }
