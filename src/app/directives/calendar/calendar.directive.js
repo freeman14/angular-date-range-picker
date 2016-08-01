@@ -413,12 +413,17 @@ class CalendarController {
       (this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY') ||
         this.getMonth() > this.maxDay() ||
         this.getMonth() > this.maxRangeDay() ||
-        this.getMonth() > this.maxMonth()) ||
-        this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY')
+        this.getMonth() > this.maxMonth())
     ) {
       this.hideRightArrow = false;
       return false;
     }
+
+    if (this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY')) {
+      this.hideRightArrow = false;
+      return false;
+    }
+
     this.hideRightArrow = this.maxMonth() ? !this.maxMonth().isSame(this.getMonth().clone().add(1, 'M'), 'M') : true;
     return this.hideRightArrow;
   }
