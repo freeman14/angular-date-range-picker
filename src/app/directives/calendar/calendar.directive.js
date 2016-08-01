@@ -413,7 +413,8 @@ class CalendarController {
       (this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY') ||
         this.getMonth() > this.maxDay() ||
         this.getMonth() > this.maxRangeDay() ||
-        this.getMonth() > this.maxMonth())
+        this.getMonth() > this.maxMonth()) ||
+        this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY')
     ) {
       this.hideRightArrow = false;
       return false;
