@@ -6,7 +6,7 @@ import { ObDateRangePicker } from './directives/ob-date-range-picker/ob-date-ran
 import { ObDayPicker } from './directives/ob-day-picker/ob-day-picker.directive';
 
 angular.module('obDateRangePicker', [])
-  .constant('moment', moment)
+  // .constant('moment', moment)
   .directive('dateRangePicker', DateRangePicker)
   .directive('obDaterangepicker', ObDateRangePicker)
   .directive('calendar', Calendar)
