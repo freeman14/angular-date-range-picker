@@ -410,12 +410,12 @@ class CalendarController {
 
   showRightArrow() {
 
-    if (this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY')) {
+    if (this.getMonth() && this.maxDay() && this.getMonth().format('MM-YYYY') === this.maxDay().format('MM-YYYY')) {
       this.hideRightArrow = false;
       return false;
     }
 
-    if (this.turn() === 'second' && this.selectedDay().diff(this.getMonth(), 'days') > 30 && this.type() === 'second') {
+    if (this.turn() === 'second' && this.selectedDay().diff(this.getMonth(), 'days') > 15 && this.type() === 'second') {
       this.hideRightArrow = true;
       return true;
     }
