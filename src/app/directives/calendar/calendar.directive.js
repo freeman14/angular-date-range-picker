@@ -421,7 +421,7 @@ class CalendarController {
     }
 
     if (
-      typeof this.getMonth() === 'object' &&
+      angular.isObject(this.getMonth()) &&
       (this.turn() === 'second' ||
         this.getMonth() > this.maxDay() ||
         this.getMonth() > this.maxRangeDay() ||

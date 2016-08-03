@@ -327,7 +327,7 @@ class DateRangePickerController {
       return this.rangeStart;
     }, () => {
       return this.rangeEnd;
-    }], (newRange, oldRange) => {
+    }], (newRange) => {
       let newStart = newRange[0];
       let newEnd = newRange[1];
       if (typeof this.maxDay() !== 'undefined' &&
