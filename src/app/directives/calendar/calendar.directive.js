@@ -53,7 +53,7 @@ class CalendarController {
   }
 
   firstRender() {
-    this.defaultWeekDaysNames = this.weekDaysName() || ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    this.defaultWeekDaysNames = this.weekDaysName() || ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
     this.firstDayOfWeek = this.weekStart() || 'su';
     this.daysOfWeek = this.buildWeek(this.firstDayOfWeek);
     this.calendar = this.buildCalendar(this.getMonth());
